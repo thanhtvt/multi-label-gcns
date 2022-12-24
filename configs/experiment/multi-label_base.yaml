@@ -1,0 +1,30 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=multi-label_base
+
+defaults:
+  - override /callbacks: default.yaml
+  - override /datamodule: voc.yaml
+  - override /logger: tensorboard.yaml
+  - override /model: resnet50_gcn.yaml
+  - override /paths: default.yaml
+  - override /trainer: default.yaml
+  - override /extras: default.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+tags: ["voc2007", "resnet50", "gcn"]
+
+seed: 42
+
+trainer:
+  min_epochs: 1
+  max_epochs: 100
+  gradient_clip_val: 5.0
+
+datamodule:
+  batch_size: 32
+  num_workers: 0
+  pin_memory: False

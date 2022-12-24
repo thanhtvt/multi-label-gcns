@@ -1,0 +1,16 @@
+_target_: src.datamodule.voc_datamodule.VOCDataModule
+year: 2007
+download: False
+data_dir: ${paths.data_dir}
+embedding_path: ${paths.data_dir}/voc/voc_glove_word2vec.pkl
+adjacency_path: ${paths.data_dir}/voc/voc_adj.pkl
+correlation_threshold: 0.4
+correlation_weight: 0.2
+train_val_test_split: [0.7, 0.15, 0.15]
+img_size: [448, 448]
+img_norm_mean: [0.485, 0.456, 0.406]
+img_norm_std: [0.229, 0.224, 0.225]
+batch_size: 32
+num_workers: 0
+pin_memory: False
+seed: 42

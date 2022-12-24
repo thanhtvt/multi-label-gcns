@@ -1,0 +1,9 @@
+omegaconf
+rich
+torch
+torchmetrics
+torchvision
+pytorch-lightning
+hydra-core
+wandb
+pyrootutils

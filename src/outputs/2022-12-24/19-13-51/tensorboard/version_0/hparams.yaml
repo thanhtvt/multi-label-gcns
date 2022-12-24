@@ -1,0 +1,106 @@
+model:
+  _target_: src.model.ml_module.MLGraphModule
+  backbone:
+    _target_: src.model.backbone.resnet.ResNet
+    num_layers: 50
+    weights: IMAGENET1K_V2
+    progress: true
+  graph:
+    _target_: src.model.graph.gcn.GCN
+    num_layers: 2
+    in_features: 300
+    hidden_features: 1024
+    out_features: 2048
+  num_labels: 20
+  optimizer:
+    _target_: torch.optim.SGD
+    _partial_: true
+    lr: 0.1
+    weight_decay: 0.0001
+  scheduler: null
+model/params/total: 25915456
+model/params/trainable: 25915456
+model/params/non_trainable: 0
+datamodule:
+  _target_: src.datamodule.voc_datamodule.VOCDataModule
+  year: 2007
+  download: false
+  data_dir: /home/jonnyjack/workspace/personal/ML-GCN/data/
+  embedding_path: /home/jonnyjack/workspace/personal/ML-GCN/data//voc/voc_glove_word2vec.pkl
+  adjacency_path: /home/jonnyjack/workspace/personal/ML-GCN/data//voc/voc_adj.pkl
+  correlation_threshold: 0.4
+  correlation_weight: 0.2
+  train_val_test_split:
+  - 0.7
+  - 0.15
+  - 0.15
+  img_size:
+  - 448
+  - 448
+  img_norm_mean:
+  - 0.485
+  - 0.456
+  - 0.406
+  img_norm_std:
+  - 0.229
+  - 0.224
+  - 0.225
+  batch_size: 32
+  num_workers: 0
+  pin_memory: false
+  seed: 42
+trainer:
+  _target_: pytorch_lightning.Trainer
+  default_root_dir: /home/jonnyjack/workspace/personal/ML-GCN/src/outputs/2022-12-24/19-13-51
+  min_epochs: 1
+  max_epochs: 100
+  accelerator: cpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  deterministic: false
+  gradient_clip_val: 5.0
+callbacks:
+  model_checkpoint:
+    _target_: pytorch_lightning.callbacks.ModelCheckpoint
+    dirpath: /home/jonnyjack/workspace/personal/ML-GCN/src/outputs/2022-12-24/19-13-51/checkpoints
+    filename: epoch_{epoch:03d}
+    monitor: val/loss
+    verbose: true
+    save_last: true
+    save_top_k: 5
+    mode: min
+    auto_insert_metric_name: false
+    save_weights_only: false
+    every_n_train_steps: null
+    train_time_interval: null
+    every_n_epochs: null
+    save_on_train_epoch_end: null
+  early_stopping:
+    _target_: pytorch_lightning.callbacks.EarlyStopping
+    monitor: val/loss
+    min_delta: 0.0
+    patience: 100
+    verbose: true
+    mode: min
+    strict: true
+    check_finite: true
+    stopping_threshold: null
+    divergence_threshold: null
+    check_on_train_epoch_end: false
+    log_rank_zero_only: false
+  model_summary:
+    _target_: pytorch_lightning.callbacks.RichModelSummary
+    max_depth: -1
+  rich_progress_bar:
+    _target_: pytorch_lightning.callbacks.RichProgressBar
+extras:
+  ignore_warnings: false
+  enforce_tags: true
+  print_config: true
+task_name: train
+tags:
+- voc2007
+- resnet50
+- gcn
+ckpt_path: null
+seed: 42

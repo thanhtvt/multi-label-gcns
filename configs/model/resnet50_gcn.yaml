@@ -1,0 +1,24 @@
+_target_: src.model.ml_module.MLGraphModule
+
+backbone:
+  _target_: src.model.backbone.resnet.ResNet
+  num_layers: 50
+  weights: IMAGENET1K_V2
+  progress: True
+
+graph:
+  _target_: src.model.graph.gcn.GCN
+  num_layers: 2
+  in_features: 300
+  hidden_features: 1024
+  out_features: 2048
+
+num_labels: 20
+
+optimizer: 
+  _target_: torch.optim.SGD
+  _partial_: true
+  lr: 0.1
+  weight_decay: 0.0001
+
+scheduler: null
