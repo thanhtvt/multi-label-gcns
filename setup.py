@@ -10,11 +10,11 @@ with open("requirements.txt", "r") as f:
 setup(
     name='src',
     version='0.1.0',
-    description='Multi-label classification with GCN and its variants',
+    description='Multi-label image recognition with GCN and its variants',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="thanhtvt",
-    url='https://github.com/thanhtvt/ml-gcn',
+    url='https://github.com/thanhtvt/multi-label-gcns',
     packages=find_packages(),
     install_requires=install_requires,
     python_requires='>=3.7',
