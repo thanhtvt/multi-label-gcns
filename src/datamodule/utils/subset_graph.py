@@ -50,7 +50,8 @@ class SubsetGraphCombiner(Dataset):
         # re-weight adjancency matrix
         filter_mat = np.ones_like(corr)
         np.fill_diagonal(filter_mat, 0)
-        adj = corr * weight / np.sum(filter_mat * corr, axis=0, keepdims=True)
+        adj = corr * weight / (
+            np.sum(filter_mat * corr, axis=0, keepdims=True) + 1e-6)
         np.fill_diagonal(adj, 1 - weight)
 
         return adj
