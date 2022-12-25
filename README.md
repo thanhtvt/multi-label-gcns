@@ -19,7 +19,7 @@ This repo contains an implementation (and a few variants) of the paper [Multi-la
 In general, the model is the combination of a CNN-based as the image representation extractor and a GCN-based as the label embedding. Figure 1 describes architecture of the model.
 
 <div align="center">
-<img src="./static/architecture.png" alt="architecture" width="600"/>
+<img src="./static/architecture.png" alt="architecture"/>
 
 Figure 1. The overall architecture of the model.
 </div>
