@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - datamodule: voc.yaml
+  - model: resnet50_gcn.yaml
+  - logger: tensorboard.yaml
+  - trainer: default.yaml
+  - paths: default.yaml
+  - extras: default.yaml
+  - hydra: default.yaml
+
+task_name: "eval"
+
+tags: ["dev"]
+
+# passing checkpoint path is necessary for evaluation
+ckpt_path: ${paths.log_dir}/train/runs/2022-09-23_14-04-37/checkpoints/epoch_055.ckpt

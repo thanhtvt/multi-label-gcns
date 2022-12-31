@@ -45,24 +45,37 @@ pip install -r requirements.txt
 ```
 
 ## 🚀 Quick start
-To train model with default configuration, going to `src` folder and run:
+### Train
+To train model with default configuration:
 
 ```bash
 # train on CPU
-python train.py trainer=cpu
+python src/train.py trainer=cpu
 
 # train on GPU
-python train.py trainer=gpu
+python src/train.py trainer=gpu
 ```
 
 To train model with chosen experiment configuration from `configs/experiment` folder, run:
 
 ```bash
-python train.py experiment=multi-label_base
+python src/train.py experiment=multi-label_base
 ```
 
 To override any parameter from commandline, run:
 
 ```bash
-python train.py logger=csv trainer.max_epochs=100
+python src/train.py logger=csv trainer.max_epochs=10
+```
+
+### Evaluate
+To evaluate model with default configuration:
+
+```bash
+python src/eval.py
+```
+
+To evaluate model with chosen checkpoint, run:
+```bash
+python src/eval.py ckpt_path=best-ckpt.ckpt
 ```
