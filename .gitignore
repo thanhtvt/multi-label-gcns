@@ -6,3 +6,4 @@ data/VOCdevkit/
 outputs/
 logs/
 !logs/.gitkeep
+*.log

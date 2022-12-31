@@ -14,7 +14,7 @@
 </div>
 
 ## Overview
-This repo contains an implementation (and a few variants) of the paper [Multi-label Image Recognition with Graph Convolutional Networks](https://arxiv.org/abs/1904.03582). This repo is following [Lightning Hydra](https://github.com/ashleve/lightning-hydra-template) template.
+This repo contains an implementation (and a few variants) of the paper [Multi-label Image Recognition with Graph Convolutional Networks](https://arxiv.org/abs/1904.03582). This repo is created following [Lightning Hydra](https://github.com/ashleve/lightning-hydra-template) template.
 
 In general, the model is the combination of a CNN-based as the image representation extractor and a GCN-based as the label embedding. Figure 1 describes architecture of the model.
 
@@ -44,9 +44,20 @@ conda activate mlgcn
 pip install -r requirements.txt
 ```
 
+## Results
+These results are not fully optimized. Updates will be added in the (unknown :D) future.
+
+<div align='center'>
+
+| Model | Params | Dataset |Accuracy | F1 | Checkpoint
+| :---: | :---: | :---: | :---: | :---: | :---: 
+| ResNet-50 + 2xGCN | 25.9M | VOC2007 | 97.5% | 84.1% | [model](https://drive.google.com/file/d/1XF5xWxuCLJUhTOOq3uuQN4R2_BuYpyFC) 
+
+</div>
+
 ## 🚀 Quick start
 ### Train
-To train model with default configuration:
+To train model with default configuration, run:
 
 ```bash
 # train on CPU
@@ -69,7 +80,7 @@ python src/train.py logger=csv trainer.max_epochs=10
 ```
 
 ### Evaluate
-To evaluate model with default configuration:
+To evaluate model with default configuration, run:
 
 ```bash
 python src/eval.py
@@ -77,5 +88,5 @@ python src/eval.py
 
 To evaluate model with chosen checkpoint, run:
 ```bash
-python src/eval.py ckpt_path=best-ckpt.ckpt
+python src/eval.py ckpt_path=best.ckpt
 ```
