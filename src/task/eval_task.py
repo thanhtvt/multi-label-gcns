@@ -26,16 +26,16 @@ def evaluate(cfg: DictConfig) -> Tuple[dict, dict]:
 
     assert cfg.ckpt_path
 
-    log.info(f"Instantiating datamodule: <{cfg.datamodule.__target__}>")
+    log.info(f"Instantiating datamodule: <{cfg.datamodule._target_}>")
     datamodule: LightningDataModule = hydra.utils.instantiate(cfg.datamodule)
 
-    log.info(f"Instantiating model: <{cfg.model.__target__}>")
+    log.info(f"Instantiating model: <{cfg.model._target_}>")
     model: LightningModule = hydra.utils.instantiate(cfg.model)
 
     log.info("Instantiating loggers...")
-    loggers: List[LightningLoggerBase] = hydra.utils.instantiate(cfg.loggers)
+    loggers: List[LightningLoggerBase] = utils.instantiate_loggers(cfg.logger)
 
-    log.info(f"Instantiating trainer <{cfg.trainer.__target__}>")
+    log.info(f"Instantiating trainer <{cfg.trainer._target_}>")
     trainer: Trainer = hydra.utils.instantiate(cfg.trainer, logger=loggers)
 
     object_dict = {
