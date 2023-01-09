@@ -51,7 +51,7 @@ These results are not fully optimized. Updates will be added in the (unknown :D)
 
 | Model | Params | Dataset |Accuracy | F1 | Checkpoint
 | :---: | :---: | :---: | :---: | :---: | :---: 
-| ResNet-50 + 2xGCN | 25.9M | VOC2007 | 97.5% | 84.1% | [model](https://drive.google.com/file/d/1XF5xWxuCLJUhTOOq3uuQN4R2_BuYpyFC) 
+| ResNet-50 + 2xGCN | 25.9M | VOC2007 | 97.8% | 85.2% | [model](https://drive.google.com/file/d/1XF5xWxuCLJUhTOOq3uuQN4R2_BuYpyFC) 
 
 </div>
 

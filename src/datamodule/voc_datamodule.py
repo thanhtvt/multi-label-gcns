@@ -137,37 +137,7 @@ class VOCDataModule(pl.LightningDataModule):
                     image_set="test",
                     target_transform=self.target_transform,
                 )
-            dataset = ConcatDataset([trainset, testset]) if testset else trainset
-            self.data_train, self.data_val, self.data_test = random_split(
-                dataset=dataset,
-                lengths=self.hparams.train_val_test_split,
-                generator=torch.Generator().manual_seed(self.hparams.seed),
-            )
-
-            self.data_train = SubsetGraphCombiner(
-                self.data_train,
-                self.hparams.embedding_path,
-                self.hparams.adjacency_path,
-                self.hparams.correlation_threshold,
-                self.hparams.correlation_weight,
-                self.train_transform
-            )
-            self.data_val = SubsetGraphCombiner(
-                self.data_val,
-                self.hparams.embedding_path,
-                self.hparams.adjacency_path,
-                self.hparams.correlation_threshold,
-                self.hparams.correlation_weight,
-                self.test_transform
-            )
-            self.data_test = SubsetGraphCombiner(
-                self.data_test,
-                self.hparams.embedding_path,
-                self.hparams.adjacency_path,
-                self.hparams.correlation_threshold,
-                self.hparams.correlation_weight,
-                self.test_transform
-            )
+            self.split_dataset(trainset, testset)
 
     def train_dataloader(self):
         return DataLoader(
@@ -207,3 +177,40 @@ class VOCDataModule(pl.LightningDataModule):
     def load_state_dict(self, state_dict: Dict[str, Any]):
         """Things to do when loading checkpoint."""
         pass
+
+    def split_dataset(self, trainset, testset):
+        dataset = ConcatDataset([trainset, testset]) if testset else trainset
+        splited_datasets = random_split(
+            dataset=dataset,
+            lengths=self.hparams.train_val_test_split,
+            generator=torch.Generator().manual_seed(self.hparams.seed),
+        )
+        if testset:
+            data_train, data_val = splited_datasets
+        else:
+            data_train, data_val, testset = splited_datasets
+
+        self.data_train = SubsetGraphCombiner(
+            data_train,
+            self.hparams.embedding_path,
+            self.hparams.adjacency_path,
+            self.hparams.correlation_threshold,
+            self.hparams.correlation_weight,
+            self.train_transform
+        )
+        self.data_val = SubsetGraphCombiner(
+            data_val,
+            self.hparams.embedding_path,
+            self.hparams.adjacency_path,
+            self.hparams.correlation_threshold,
+            self.hparams.correlation_weight,
+            self.test_transform
+        )
+        self.data_test = SubsetGraphCombiner(
+            testset,
+            self.hparams.embedding_path,
+            self.hparams.adjacency_path,
+            self.hparams.correlation_threshold,
+            self.hparams.correlation_weight,
+            self.test_transform,
+        )
